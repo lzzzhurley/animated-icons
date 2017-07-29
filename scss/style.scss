@@ -1,0 +1,285 @@
+@import "compass/css3";
+
+$r: 1;
+$s: 24px / $r;
+$d: 64px / $r;
+$b: 4px / $r;
+$n: 6;
+$a: 360deg / $n;
+$c: #ccc;
+
+.part {
+  -webkit-backface-visibility:hidden;
+}
+
+.lc-icon {
+  float: left;
+  margin: $s 0 0 $s;
+  padding: $s / 3;
+  border: 1px dashed #aaa;
+  border-radius: $s / 2;
+}
+
+.lc-icon {
+  line-height: 0;
+  font-size: 0;
+  height: 2*$d;
+  width: 2*$d;
+}
+
+.lc-icon-small {
+  transform: scale(0.5);
+  border: 2px dashed #aaa;
+}
+
+.lc-icon-animated {
+  float: none;
+  animation: spin 2.0s cubic-bezier(.25,.15,.25,1) infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.part {
+  background-color: #fff;
+}
+
+.test-back {
+  @for $i from 1 through $n {
+    $j: $i - 1;
+    .part-#{$i} {
+      background-color: darken(#fff, $j*(100/$n));
+    }
+  }
+}
+
+.part {
+  border: $b solid $c;
+  width: $s;
+  height: $s;
+  border-radius: 100%;
+  position: relative;
+  transform-origin: 50% $d;
+}
+
+.lc-icon-9, .lc-icon-10 {
+  border: 1px dashed lighten(#aaa, 10%);
+  .part {
+    border: $b solid lighten($c, 10%);
+  }
+}
+
+.lc-icon-animated {
+  border: none;
+  padding: 1.5 * $d;
+}
+
+.lc-icon-animated .part {
+  transition: all ease-in-out 1.2s;
+}
+
+@mixin ds($w, $h, $as, $m, $q) {
+  @for $i from 1 through $n {
+    $j: $i - 1;
+    .part-#{$i} {
+      top: - $j * ( $w + 2 * $b ) + $m + $q * $d / 4;
+      left: $d - $h / 2 - $b;
+      transform: rotate($j*$a + $as);
+      transform-origin: 50% $d - $q * $d / 4;
+    }
+  }
+}
+
+.lc-icon, .lc-icon-4 {
+  @include ds($s, $s, 0, 0, 0);
+}
+
+.lc-icon-5 {
+  $w: 1.50 * $s;
+  $h: 0.50 * $s;
+
+  .part {
+    border-radius: $b * 2;
+    height: $w;
+    width: $h;
+    left: none;
+    top: none;
+    transform-origin: 50% $d;
+  }
+
+  @include ds($w, $h, 90deg, 0, 0);
+}
+
+.lc-icon-6 {
+  $w: $d * 2 - 2 * $b;
+  $h: ($d * 2 + $b) / $n - 3 * $b;
+
+  .part {
+    border-radius: $b * 2;
+    height: $h;
+    width: $w;
+    margin-bottom: $b;
+    transform-origin: 50% $d;
+    transform: rotate(0);
+    left: 0;
+    top: 0;
+  }
+
+  @for $i from 1 through $n {
+    $j: $i - 1;
+    .part-#{$i} {
+      width: $w / $i;
+    }
+  }
+}
+
+.lc-icon-10, .lc-icon-8 {
+  $w: $d * 2 - 2 * $b;
+  $h: (( $d * 2 + $b) / $n) - 3 * $b;
+
+  .part {
+    border-radius: $b * 2;
+    height: $h;
+    width: $w;
+    margin-bottom: $b;
+    transform-origin: 50% 0;
+    transform: rotate(0);
+    left: 0;
+    top: 0;
+  }
+}
+
+.lc-icon-6, .lc-icon-10, .lc-icon-8 {
+  $h: ($d * 2 + $b) / $n - 3 * $b;
+  @for $i from 1 through $n {
+    $j: $i - 1;
+    .part-#{$i} {
+      $t: - $j * ($h + $b)  / (2 * $n);
+      transform-origin: $d $t;
+    }
+  }
+}
+
+.lc-icon-9 {
+  .part {
+    border-radius: $b * 1.5;
+  }
+}
+
+.lc-icon-3 {
+  $x: round(sqrt($n));
+  $y: round($n / $x);
+  $sx: (2 * $d + $b) / $x - 3 * $b;
+  $sy: (2 * $d + $b) / $y - 3 * $b;
+
+  .part {
+    border-radius: $b * 1.5;
+    transform: rotate(0);
+    left: 0;
+    top: 0;
+    width: $sx;
+    height: $sy;
+  }
+
+  $i: 1;
+
+  @for $xi from 1 through $x {
+    @for $yi from 1 through $y {
+      .part-#{$i} {
+        left: ($xi - 1) * ($sx + 3 * $b);
+        top: -($sy + 2 * $b) * ($i - 1) + ($yi - 1) * ($sy + 3 * $b);
+      }
+      $i: $i + 1;
+    }
+  }
+}
+
+.lc-icon-8 {
+  .part {
+    border-radius: $b * 1.5;
+  }
+
+  @for $i from 1 through $n {
+    $x: 1.1 - abs($i - ($n + 1) / 2) / abs(1 - ($n + 1) / 2);
+    $r: (1 - $x) / 2;
+    .part-#{$i} {
+      width: $x * ($d * 2 - 2 * $b);
+      left: $r * ($d * 2 - 2 * $b) + $d / $n;
+      transform: skew(-45deg, 0deg);
+    }
+  }
+}
+
+.lc-icon-7 {
+  $y: round(sqrt($n));
+  $x: round($n / $y);
+  $sx: (2 * $d - 2 * $b) / $x - 2 * $b;
+  $sy: (2 * $d - $b) / $y - 2 * $b;
+
+  .part {
+    border-radius: $b * 3;
+    transform: rotate(0);
+    left: 0;
+    top: 0;
+    width: $sx;
+    height: $b;
+    tranform-origin: 50% $d;
+  }
+
+  $i: 1;
+
+  @for $xi from 1 through $x {
+    @for $yi from 1 through $y {
+      .part-#{$i} {
+        left: ($xi - 1) * ($sx + 3 * $b);
+        top: -(2 * $b) * ($i - 1) + ($yi - 1) * ($sy + 3 * $b) + $b * ($i - 1);
+      }
+      $i: $i + 1;
+    }
+  }
+}
+
+.lc-icon-2 {
+  $z: $b * 2;
+  .part {
+    width: $z;
+    height: $z;
+  }
+
+  @include ds($z, $z, 90deg, 0, 2);
+}
+
+.lc-icon-1 {
+  .part {
+    width: $s * 1.5;
+    height: $s * 1.5;
+  }
+
+  @include ds($s * 1.5, $s * 1.5, 0, 0, 0);
+}

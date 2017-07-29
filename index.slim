@@ -1,0 +1,11 @@
+- icons = 10
+- parts = 6
+
+div(class="lc-icon-animated lc-icon")
+  - for i in 1..parts do
+    div(class = "part part-#{i}")
+
+- for j in 1..icons do
+  div(class="lc-icon lc-icon-small lc-icon-#{j}")
+    - for i in 1..parts do
+      div(class = "part part-#{i}")
